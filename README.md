@@ -11,5 +11,5 @@ The scope of the project includes the development of a user-friendly interface, 
 * Then Install Requirements.txt
 pip install -requirement.txt
 
-*Then to tun the project 
+* Then to tun the project 
 python manage.py runserver 
