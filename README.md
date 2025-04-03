@@ -6,9 +6,9 @@ The scope of the project includes the development of a user-friendly interface, 
 
 ## How to Run the Project
 * Go to the Folder apath \Agriexpert
-*Then Activate the Environment 
+* Then Activate the Environment 
  .venv\Scripts\activate
-*Then Install Requirements.txt
+* Then Install Requirements.txt
 pip install -requirement.txt
 
 *Then to tun the project 
