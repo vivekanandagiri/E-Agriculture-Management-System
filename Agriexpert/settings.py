@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+SECRET_KEY = '********************8'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  
         'NAME': 'test_db',  
         'USER': 'root',  
-        'PASSWORD': 'Vivekananda@5',  
+        'PASSWORD': '*********',  
         'HOST': '127.0.0.1',  
         'PORT': '3306',  
     }  
@@ -145,7 +145,10 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'data/') # 'data' is my media folder
 MEDIA_URL = '/media/'
-
+ACCOUNT_SID=
+AUTH_TOKEN=
+COUNTRY_CODE='+91'
+TWILIO_PHONE_NUMBER=
 
 
 LOGOUT_REDIRECT_URL = '/'
