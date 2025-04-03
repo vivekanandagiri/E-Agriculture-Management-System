@@ -1,0 +1,104 @@
+{% extends 'authbase.html' %}
+
+{% block title %}Login{% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="card bg-transparent shadow border-dark border-5">
+                    <div class="card-header bg-transparent pb-5">
+                        <div class="text-muted text-center mt-2">
+                            <h2><b>Sign In</b></h2>
+                        </div>
+                    </div>
+                    <div class="card-body px-lg-5 py-lg-5">
+                        <div class="text-center text-muted mb-4">
+                            {% if msg %}
+                                <p>{{ msg }}</p>
+                            {% else %}
+                                <p class="text-light">
+                                    Enter your Credentials
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Tab Links -->
+                        <div class="text-center">
+                            <button id="usernameTab" class="styled-button active" onclick="showForm('usernameForm', 'usernameTab', 'otpTab')">Username/Password</button>
+                            <button id="otpTab" class="styled-button" onclick="showForm('otpForm', 'otpTab', 'usernameTab')">Mobile OTP</button>
+                        </div>
+
+                        <!-- Username/Password Form -->
+                        <form method="POST" id="usernameForm" style="display: block;">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                                    </div>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                    </div>
+                                    {{ form.password }}
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="styled-button-action">Sign in</button>
+                            </div>
+                        </form>
+
+                        <!-- OTP Form -->
+                        <form method="POST" id="otpForm" style="display: none;">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
+                                    </div>
+                                    <input type="tel" name="mobile" class="form-control" placeholder="Mobile Number" required>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="styled-button-action">Send OTP</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <small class="text-white-50">Not a user? <br></small><a href="{% url 'authregister' %}" class="text-light"><h6 class="orange-text">Register</h6></a>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="/admin/login/" class="styled-button active">Login as Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formId, activeButtonId, inactiveButtonId) {
+            document.getElementById('usernameForm').style.display = 'none';
+            document.getElementById('otpForm').style.display = 'none';
+            document.getElementById(formId).style.display = 'block';
+
+            document.getElementById(activeButtonId).classList.add('active');
+            document.getElementById(inactiveButtonId).classList.remove('active');
+        }
+    </script>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,83 @@
+<!-- weather/templates/weather/weather.html -->
+{% extends 'base.html' %}
+{% block title %}Weather App{% endblock title %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Agri Ai </p>
+                    <h1>Weather</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="contact-form">
+        <form method="GET">
+            <input type="text" name="city" id="locationInput" class="form-control" placeholder="Enter a city" required>
+            <button type="submit" class="styled-button-action mt-3">Search</button>
+        </form>
+        {% if weather_data %}
+            <div class="weather-info mt-4">
+                <h2>{{ weather_data.name }}</h2>
+                <p><strong>Temperature:</strong> {{ weather_data.main.temp }}°C</p>
+                <p><strong>Humidity:</strong> {{ weather_data.main.humidity }}%</p>
+                <p><strong>Rainfall:</strong> {{ weather_data.rain.1h|default:"0 mm" }} mm</p>
+                <p><strong>Description:</strong> {{ weather_data.weather.0.description }}</p>
+                <i class="{{ weather_data.icon }} fa-3x"></i>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<style>
+    .contact-form {
+        background-color: #f9f9f9; 
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .contact-form h1, .contact-form h2, .contact-form p {
+        color: #333;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .styled-button-action {
+        background-color: #28a745; 
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 25px;
+    }
+
+    .styled-button-action:hover {
+        background-color: #218838; 
+    }
+
+    .weather-info {
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}

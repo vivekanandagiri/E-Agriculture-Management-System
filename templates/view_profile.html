@@ -1,0 +1,32 @@
+{% extends 'authbase.html' %}
+
+{% block title %}View Profile{% endblock title %}
+
+{% block content %}
+
+<div class="container mt--8 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card bg-transparent shadow border-dark border-5">
+                <div class="card-header bg-transparent pb-5">
+                    <div class="text-muted text-center mt-2">
+                        <h2><b>Your Profile</b></h2>
+                    </div>
+                </div>
+                <div class="card-body px-lg-5 py-lg-5">
+                    <p><b>Username:</b> {{ user.username }}</p>
+                    <p><b>Email:</b> {{ user.email }}</p>
+                    <p><b>First Name:</b> {{ user.first_name }}</p>
+                    <p><b>Last Name:</b> {{ user.last_name }}</p>
+                    <div class="text-center">
+                        <a href="{% url 'edit_profile' %}" class="styled-button-action">Edit Profile</a>
+                        <a href="{% url 'change_password' %}" class="styled-button-action">Change Password</a>
+                        <a href="{% url 'user_orders' %}" class="styled-button-action">Your Order </a>
+                        <a href="{% url 'logout' %}" class="styled-button-action">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

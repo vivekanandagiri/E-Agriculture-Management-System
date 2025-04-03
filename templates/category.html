@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Shop{% endblock title %}
+{% load static %}
+
+{% block content %}
+
+	<!-- breadcrumb-section -->
+	<!--<div class="hero-area hero-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 offset-lg-2 text-center">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+							<p class="subtitle">Farmers One Stop Solution for everything </p>
+							<h1>Direct From Farmers,Direct For Farmers</h1>
+							<div class="hero-btns">
+								<a href="shop.html" class="boxed-btn">Go Shopping</a>
+								<a href="contact.html" class="bordered-btn">Contact Us</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>-->
+
+	<!-- end breadcrumb section -->
+    <!-- Carousel Start -->
+           <!-- shop banner -->
+           <section class="shop-banner">
+            <div class="container">
+                <h3>Diwali sale is on! <br>Shop with AgriAI<br> with big <span class="orange-text">Discount...</span></h3>
+                  <div class="sale-percent"><span>Sale! <br> Upto</span>50% <span>off</span></div>
+                  <a href="shop.html" class="cart-btn btn-lg">Shop Now</a>
+              </div>
+          </section>
+        <!-- end shop banner -->
+    <!-- Carousel End -->
+
+
+	<!-- Categories Start -->
+    <div class="container-fluid pt-5">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-transparent pr-3">Categories</span></h2>
+        <div class="row px-xl-5 pb-3">
+            {% for Category in category %}
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="{% url 'category_view' Category.name %}">
+                    <div class="cat-item d-flex align-items-center mb-4 border shadow bg-body-tertiary rounded">
+                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
+                            {% if Category.image %}
+                                <img class="img-fluid" src="{{ Category.image.url }}" alt="image">
+                            {% else %}
+                                <img class="img-fluid" src="" alt="image">
+                            {% endif %}
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6>{{ Category.name }}</h6>
+                            <small class="text-body">{{ category_counts.category.id }} Products</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Categories End -->
+    <!--	</div>-->
+        
+	<!-- end products -->
+
+		{% endblock %}

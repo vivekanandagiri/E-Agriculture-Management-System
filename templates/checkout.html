@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% block title %}Checkout{% endblock title %}
+{% load static %}
+{% block content %}
+<script type="text/javascript">
+	//var user = '{{request.user}}'
+	var user = "{{ request.user|escapejs }}";
+ 
+ function getToken(name) {
+	 var cookieValue = null;
+	 if (document.cookie && document.cookie !== '') {
+		 var cookies = document.cookie.split(';');
+		 for (var i = 0; i < cookies.length; i++) {
+			 var cookie = cookies[i].trim();
+			 // Does this cookie string begin with the name we want?
+			 if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				 break;
+			 }
+		 }
+	 }
+	 return cookieValue;
+ }
+ var csrftoken = getToken('csrftoken')
+ 
+ </script>
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Fresh and Organic</p>
+						<h1>Check Out Product</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- check out section -->
+	<div class="checkout-section mt-150 mb-150">
+		<div class="container"> 
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample">
+						  <div class="card single-accordion">
+						    <div class="card-header" id="headingOne">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+						          Shipping Address
+						        </button>
+						      </h5>
+						    </div>
+
+						    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+						      <div class="card-body">
+						        <div class="billing-address-form">
+						        	<form action="index.html" id='form'>
+										<div id="user-info">
+											<p><input type="text" placeholder="Name" id="name" name="name" required></p>
+											<p><input type="email" placeholder="Email if any" id="email" name="email"></p>
+											<p><input type="tel" id="phone" name="phone" placeholder="Phone Number" pattern="[0-9]{10}" required></p>
+										</div>
+										<hr>
+										<div id="shipping-info">
+											<p><input type="text" placeholder="Address"id="address" name="address"></p>
+											<p><input type="text" placeholder="City" id="city" name="city"></p>
+											<p><input type="text" placeholder="State" id="state" name="state"></p>
+											<p><input type="number" placeholder="Pincode"pattern="[0-9]{6}" id="pincode" name="pincode" required></p>
+										</div>
+										<input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+						        	</form>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="card single-accordion">
+						    <div class="card-header" id="headingThree">
+						      <h5 class="mb-0">
+						        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+						          Payment Option
+						        </button>
+						      </h5>
+						    </div>
+						    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+						      <div class="card-body">
+						        <div class="card-details" id="payment-info">
+
+						        	<p>Paypal</p>
+									<button class="btn btn-success btn-block" id="make-payment">Make Payment</button>
+									<p>Stripe</p>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="order-details-wrap">
+						<table class="order-details">
+							<thead>
+									<tr>
+										<th>
+											<a href="{% url 'cart' %}" class="boxed-btn" style="background-color:;min-height:30px;float:left;"> <i class="fa fa-arrow-left" aria-hidden="true"> Back to Cart</i></a>
+										</th>
+										<th></th>
+									</tr>
+								<tr>
+									<th>Your order Details</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody class="order-details-body">
+								<tr>
+									<td>Product</td>
+									<td>Total</td>
+								</tr>
+								{% for item in items %}
+								<tr>
+									<td>{{item.product.name}}</td>
+									<td>₹{{ item.product.price|floatformat:2 }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+							<tbody class="checkout-details" > 
+								<tr>
+									<td>Subtotal</td>
+									<td>{{order.get_cart_total|floatformat:2}}</td>
+								</tr>
+								{% if order.get_cart_total <= 500 %}
+								<tr>
+									<td>Shipping</td>
+									<td>₹0</td>
+								</tr>
+								{% else %}
+								<tr>
+									<td>Shipping</td>
+									<td>₹0</td>
+								</tr>
+								{% endif %}
+								<tr style="background-color: #FBAB7E;background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);">
+									<td >Total</td>
+									<td>{{order.get_cart_total|floatformat:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<a  id="make-payment" class="boxed-btn">Place Your Order</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end check out section -->
+	<script type="text/javascript">
+		var shipping = '{{shipping}}';
+		var total = '{{order.get_cart_total|floatformat:2}}';
+		// var user = '{{ request.user|default:"AnonymousUser" }}';
+	
+		if (shipping == 'False'){
+			document.getElementById('shipping-info').innerHTML = '';
+		}
+	
+		var form = document.getElementById('form');
+		form.addEventListener('submit', function(e){
+			e.preventDefault();
+			console.log('Form Submitted...');
+			document.getElementById('form-button').classList.add("hidden");
+			document.getElementById('collapseThree').classList.remove("hidden");
+		});
+	
+		document.getElementById('make-payment').addEventListener('click', function(e){
+			submitFormData();
+		});
+	
+		if (user != 'AnonymousUser'){
+			document.getElementById('user-info').innerHTML = '';
+		}
+	
+		if (shipping == 'False' && user != 'AnonymousUser'){
+			document.getElementById('form-wrapper').classList.add("hidden");
+			document.getElementById('payment-info').classList.remove("hidden");
+		}
+	
+		function submitFormData(){
+        console.log('Payment button clicked');
+
+        var userFormData = {
+            'name': null,
+            'email': null,
+            'total': total,
+            'phone': null,
+        };
+
+        var shippingInfo = {
+            'address': null,
+            'city': null,
+            'state': null,
+            'pincode': null,
+        };
+
+        if (shipping != 'False'){
+            console.log('Accessing shipping fields:', form.address, form.city, form.state, form.pincode);
+            shippingInfo.address = form.address.value;
+            shippingInfo.city = form.city.value;
+            shippingInfo.state = form.state.value;
+            shippingInfo.pincode = form.pincode.value;
+        }
+
+        if (user == 'AnonymousUser'){
+            userFormData.name = form.name.value;
+            userFormData.email = form.email.value;
+        }
+
+        console.log('Shipping Info:', shippingInfo);
+        console.log('User Info:', userFormData);
+
+        var url = "/shop/process_order/";
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            }, 
+            body: JSON.stringify({'form': userFormData, 'shipping': shippingInfo}),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Success:', data);
+            alert('Transaction completed');  
+            window.location.href = `/shop/order-success/${data.transaction_id}/`;
+        })
+        .catch((error) => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
+	</script>
+	
+	
+{% endblock %}

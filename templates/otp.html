@@ -1,0 +1,59 @@
+{% extends 'authbase.html' %}
+
+{% block title %} Login {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+          <div class="card bg-transparent shadow border-dark border-5">
+            <div class="card-header bg-transparent pb-5">
+              <div class="text-muted text-center mt-2 ">
+                <h2>  <b>Verify Your OTP</b></h2>
+              </div>
+            </div>
+            <div class="card-body px-lg-5 py-lg-5">
+              <h5 class="text-center">Enter OTP sent to your Mobile number {{mobile}}</h5>
+              <div class="col-6 mx-auto">
+                {% if message %}
+                <div class="alert alert-{{class}}">
+                    {{message}}
+                </div>
+                {% endif %}
+        
+                <form class="mt-2" form action="/otp/home/" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group col-12 mt-3">
+                            <input type="text" placeholder="Enter otp" class="form-control" name="otp" id="">
+                        </div>
+                    </div> 
+                    <div class="text-center"> 
+                    <button class="btn btn-primary mt-3">Submit</button>
+                    </div>
+                    <p>Don't have account <a href="{% url 'authregister' %}">Register</a></p>
+                </form>
+            </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+                <small class="text-white-50">Not a user? <br></small><a href="{% url 'authregister' %}" class="text-light"><h6 class="orange-text">Register</h6></a>
+            </div>
+            <!--<div class="col-6 text-right">
+              <a href="https://www.instagram.com/im_vivekananda?igsh=MTRzbHg2eGJuN3Vjcg==" class="text-light"><small>Get Support</small></a>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}

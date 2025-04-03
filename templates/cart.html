@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block title %}Cart{% endblock title %}
+{% load static %}
+{% block content %}
+<script type="text/javascript">
+	//var user = '{{request.user}}'
+	var user = "{{ request.user|escapejs }}";
+ 
+ function getToken(name) {
+	 var cookieValue = null;
+	 if (document.cookie && document.cookie !== '') {
+		 var cookies = document.cookie.split(';');
+		 for (var i = 0; i < cookies.length; i++) {
+			 var cookie = cookies[i].trim();
+			 // Does this cookie string begin with the name we want?
+			 if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				 break;
+			 }
+		 }
+	 }
+	 return cookieValue;
+ }
+ var csrftoken = getToken('csrftoken')
+ 
+ </script>
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>AgriAI</p>
+						<h1>Cart</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+	<div class="cart-buttons mx-1 ">
+		<a href="{% url 'shop' %}" class="boxed-btn" style="background-color:green;min-height:30px;float: center;"><i class="fa fa-arrow-left" aria-hidden="true"> Go Back to Shop</i></a>
+	</div>
+	<!-- cart -->
+	<div class="cart-section mt-150 mb-150">
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-md-12">
+					<div class="cart-table-wrap">
+						<table class="cart-table">
+							<thead class="cart-table-head">
+								<tr class="table-head-row">
+									<th class="product-remove"></th>
+									<th class="product-image"><b>Product Image</b></th>
+									<th class="product-name"><b>Name</b></th>
+									<th class="product-price"><b>Price</b></th>
+									<th class="product-quantity"><b>Quantity</b></th>
+									<th class="product-total"><b>Total</b></th>
+								</tr>
+							</thead>
+							<tbody>
+								{{items.name}}
+								{% for item in items %}
+								<tr class="table-body-row">
+									<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
+									<td class="product-image"><img src="{{item.product.image.url}}" alt=""></td>
+									<td class="product-name px-2">{{item.product.name}} </td>
+									<td class="product-price">₹{{item.product.price|floatformat:2}} </td>
+									<td class="product-quantity"><i class="fa fa-chevron-circle-up mx-5  update-cart" aria-hidden="true" data-product="{{item.product.id}}" data-action="add" ></i><pre>{{item.quantity}}</pre> <i class="fa fa-chevron-circle-down mx-5  update-cart" aria-hidden="true" data-product="{{item.product.id}}" data-action="remove"></i> </td>
+									<td class="product-total cart-input-qty px-3 ">₹{{ item.total_price|floatformat:2 }}</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<div class="total-section">
+						<table class="total-table">
+							<thead class="total-table-head">
+								<tr class="table-total-row">
+									<th>Total</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="total-data">
+									<td><strong>Items: </strong></td>
+									<td>{{cartItems}}</td>
+								</tr>
+								<tr class="total-data">
+									<td><strong>Subtotal: </strong></td>
+									<td>₹{{ order.get_cart_total|floatformat:2 }}</td>
+								</tr>
+								{% if order.get_cart_total <= 500 %}
+								<tr class="total-data">
+									<td><strong>Shipping: </strong></td>
+									<td>₹0</td>
+								</tr>
+								{% else %}
+								<tr class="total-data">
+									<td><strong>Shipping: </strong></td>
+									<td>₹0</td>
+								</tr>
+								{% endif %}
+								<tr class="total-data">
+									<td><strong>Total: </strong></td>
+									<td>₹{{ order.get_cart_total|floatformat:2}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="cart-buttons">
+							<a href="" class="boxed-btn update-cart">Update Cart</a>
+							<a href="{% url 'checkout' %}" class="boxed-btn black">Check Out</a>
+						</div>
+					</div>
+
+					<!--<div class="coupon-section">
+						<h3>Apply Coupon</h3>
+						<div class="coupon-form-wrap">
+							<form action="index.html">
+								<p><input type="text" placeholder="Coupon"></p>
+								<p><input type="submit" value="Apply"></p>
+							</form>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end cart -->
+{% endblock %}

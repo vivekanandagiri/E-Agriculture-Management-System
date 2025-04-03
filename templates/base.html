@@ -1,0 +1,325 @@
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- title -->
+	<title>Customer {% block title %} {% endblock %} | AgriAi</title>
+    {% load static %}
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'assets/img/favicon.png'%}" >
+    <!--<link rel="stylesheet" href="{% static 'myfirst.css' %}">--> 
+	<!-- google font -->
+	<!--<link href="{% static 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' %}%} " rel="stylesheet">
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap' %}%} " rel="stylesheet"> -->
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="{%static 'assets/css/all.min.css'%}"> 
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="{%static 'assets/bootstrap/css/bootstrap.min.css'%}">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="{%static 'assets/css/owl.carousel.css'%}">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="{%static 'assets/css/magnific-popup.css'%}">
+	<!-- animate css -->
+	<link rel="stylesheet" href="{%static 'assets/css/animate.css'%}">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="{%static 'assets/css/meanmenu.min.css'%}">
+	<!-- main style 	-->
+	<link rel="stylesheet" href="{%static 'assets/css/main.css'%}">
+
+	<!-- responsive -->
+	<link rel="stylesheet" href="{%static 'assets/css/responsive.css'%}">
+	<!--Login Pop up css-->
+		<link rel="stylesheet" href="{%static 'assets/css/loginpop.css'%}">
+
+</head>
+<body>
+
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<!--<div class="container">-->
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="{% url 'mainpage' %}">
+								<img src="{% static 'assets/img/logo.png' %} " alt="">
+							</a>
+						</div>
+						<!-- logo -->
+						
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li><div class="active">
+									{% if user.is_authenticated %}
+										<h3 class="text-light "> Hello {{ user.username }}</h3>
+										<!--<a class="btn btn-danger" href="{% url 'authlogin' %}">Log Out</a>-->
+										
+									{% else %}
+									<h4 class="text-light ">Welcome to AgriAi</h4>
+									{% endif %}
+								</div>
+								<li>
+								<li class="active"><a href="{% url 'mainpage' %}">Home</a>
+								</li>
+								<li><a href="{% url 'mainpage' %}">AgriAi Special</a>
+									<ul class="sub-menu">
+										<li><a class="btn btn-light " href="{% url 'weather_view' %}">Check Weather</a></li>
+										<li><a class="btn btn-light" href="{% url 'agri:predict_crop' %}">Predict Crop</a></li>
+										<li><a class="btn btn-light" href="{% url 'agri:fertilizer_predict' %}">Fertilizer Suggession</a></li>
+										<li><a class="btn btn-light" href="{% url 'agri:track_soil_test' %}">Soil Test Report</a></li>
+										<li><a class="btn btn-light" href="{% url 'agri:request_soil_test' %}">Request Soil Test </a></li>
+										<li><a href="#">Disease Detection(Coming Soon)</a></li>
+										
+									</ul>
+								</li>
+								<li><a href="{% url 'shop' %}">Shop</a></li>
+								<li><a href="{% url 'about' %}">About</a></li>
+								<li><a href="{% url 'news' %}">News</a></li>
+								<li><a href="{% url 'contact' %}">Contact Us</a></li>
+								
+								<li>
+									<div class="header-icons">
+										<li><a  href="{% url 'view_profile' %}"><i class='fas fa-user-alt' style='color:white'></i></a>
+											<ul class="sub-menu">
+												{% if user.is_authenticated %}
+												<li><a class="btn btn-light" href="{% url 'user_orders' %}">Your Order</a></li>
+												<li><a class="btn btn-light" href="{% url 'logout' %}">Logout</a></li>
+												<li><a class="btn btn-light" href="{% url 'change_password' %}">Change Password</a></li>
+												<li><a class="btn btn-light" href="{% url 'view_profile' %}">View Profile</a></li>
+												{% else %}
+													<li><a class="btn btn-light" href="{% url 'authlogin' %}">Login</a></li>
+													<li><a class="btn btn-light" href="{% url 'authregister' %}">Sign Up</a></li>
+												{% endif %}
+											
+
+												<li>{% if user.is_authenticated %}
+													
+													{% else %}
+													<b> You are not Logged in</b>
+												{% endif %}
+												</li>
+											</ul>
+											
+											
+										</li>
+										<li><a class="shopping-cart" href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i> Cart<sup style='color:Red'><b>{{cartItems}}</b></sup></a></li>
+										<li><a class="mobile-hide search-bar-icon" href="javascript:void(0);" onclick="toggleSearchArea()"><i class="fas fa-search"></i> Search Here</a></li>									</div>
+								</li>
+							</ul>
+						</nav>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		<!--</div>-->
+	</div>
+	<!-- end header -->
+	<!-- search area -->
+	<!-- Search Icon in Navigation -->
+
+
+<!-- Search Area -->
+<div class="search-area" id="searchArea" style="display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <span class="close-btn" onclick="toggleSearchArea()"><i class="fas fa-window-close"></i></span>
+                <div class="search-bar">
+                    <div class="search-bar-tablecell">
+                        <h3>Search For:</h3>
+                        <form method="GET" action="{% url 'search_products' %}">
+                            <input type="text" name="query" placeholder="Search for Products ">
+                            <button type="submit">Search <i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+	<!-- end search area -->
+    {% block content %}
+	
+	<!-- Content Here -->
+	 
+    {% endblock %} 
+
+     <!-- logo carousel -->
+  <div class="logo-carousel-section">
+	<div class="container">
+	  <div class="row">
+		<div class="col-lg-12">
+		  <div class="logo-carousel-inner">
+			<div class="single-logo-item">
+			  <img src="{% static 'assets/img/company-logos/tata-logo.png ' %}" alt="">
+			</div>
+			<div class="single-logo-item">
+			  <img src="{% static 'assets/img/company-logos/syngenta-logo.jpeg ' %}" alt="">
+			</div>
+			<div class="single-logo-item">
+			  <img src="{% static 'assets/img/company-logos/sea6-logo.jpeg ' %}" alt="">
+			</div>
+			<div class="single-logo-item">
+			  <img src="{% static 'assets/img/company-logos/janatha.png ' %}" alt="">
+			</div>
+			<div class="single-logo-item">
+			  <img src="{% static 'assets/img/company-logos/Namdhari-logo.jpg ' %}" alt="">
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  <!-- end logo carousel -->
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-lg-5">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">About us</h2>
+						<p>Our team is made up of experienced farming experts, scientists, and professionals who work together to provide accurate and helpful information on our website. We want to help farmers and gardeners grow their crops successfully and sustainably, and we're dedicated to giving them the best advice possible.</p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Get in Touch</h2>
+						<ul>
+							<li>N5/357, Bhubaneswar,Odisha</li>
+							<li>support@AgriAI.com</li>
+							<li>+91 9977656543</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box pages">
+						<h2 class="widget-title">Pages</h2>
+						<ul>
+							<li><a href="{% url 'mainpage' %}">Home</a></li>
+							<li><a href="{% url 'about' %}">About</a></li>
+							<li><a href="{% url 'shop' %}">Shop</a></li>
+							<li><a href="{% url 'news' %}">News</a></li>
+							<li><a href="{% url 'mainpage' %}">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+
+	<!-- copyright -->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<!--
+					<p>Copyrights &copy; 2024 - <a href="#"> Developed By Vivekananda Giri and Priyanshu Nayak</a>,  All Rights Reserved.<br>-->
+						<p> Developed By Vivekananda Giri and Priyanshu Nayak</p>
+					</p>
+				</div>
+				<div class="col-lg-6 text-right col-md-12">
+					<div class="social-icons">
+						<ul>
+							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end copyright -->
+{% if user.is_authenticated %}
+    <h3 class="text-light">Hello {{ user.username }}</h3>
+{% else %}
+    <script type="text/javascript">
+        window.addEventListener('load', function() {
+            $('#loginWarningModal').modal('show');
+        });
+    </script>
+{% endif %}
+
+<!-- Warning Modal -->
+<div class="modal fade" id="loginWarningModal" tabindex="-1" role="dialog" aria-labelledby="loginWarningModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="loginWarningModalLabel">Warning</h5>
+               <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                    <span aria-hidden="true">&times;</span>
+                </button>-->
+            </div>
+            <div class="modal-body">
+                <h4 class="text-light">You are Not Logged In</h4>
+                <p>Please log in to access all the Features .</p>
+            </div>
+            <div class="modal-footer ">
+                <a href="{% url 'authlogin' %}" class="btn btn-dark">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal-body {
+    text-align: center;
+}
+
+.modal-body .text-danger {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+.modal-content {
+    font-weight: bold;
+    background: linear-gradient(to bottom right, #a6c69a, #009115);
+	
+}
+
+.modal-footer .btn {
+    width: 100px;
+}
+</style>
+	<!-- jquery -->
+	<script src="{% static 'assets/js/jquery-1.11.3.min.js ' %}"></script>
+	<!-- bootstrap -->
+	<script src="{% static 'assets/bootstrap/js/bootstrap.min.js ' %}"></script>
+	<!-- count down -->
+	<script src="{% static 'assets/js/jquery.countdown.js ' %}"></script>
+	<!-- isotope -->
+	<script src="{% static 'assets/js/jquery.isotope-3.0.6.min.js ' %}"></script>
+	<!-- waypoints -->
+	<script src="{% static 'assets/js/waypoints.js ' %}"></script>
+	<!-- owl carousel -->
+	<script src="{% static 'assets/js/owl.carousel.min.js ' %}"></script>
+	<!-- magnific popup -->
+	<script src="{% static 'assets/js/jquery.magnific-popup.min.js ' %}"></script>
+	<!-- mean menu -->
+	<script src="{% static 'assets/js/jquery.meanmenu.min.js ' %}"></script>
+	<!-- sticker js -->
+	<script src="{% static 'assets/js/sticker.js ' %}"></script>
+	<!-- main js -->
+	<script src="{% static 'assets/js/main.js ' %}"></script>
+	<!--cart-->
+	<script type="text/javascript" src="{% static 'assets/js/cart.js' %}"></script>
+</body>
+</html>

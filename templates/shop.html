@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Shop{% endblock title %}
+{% load static %}
+{% block content %}
+<style>
+
+  
+    .product-image img {
+      max-height: 150px;
+      object-fit: cover;
+      width: 100%;
+    }
+
+  
+    .single-product-item h3 {
+      height: 40px; /* Fixed height for product name */
+      overflow: hidden; /* Hide overflow text */
+      text-overflow: ellipsis; /* Add ellipsis for overflow text */
+      white-space: nowrap; /* Prevent text wrap */
+    }
+  </style>
+  
+<script type="text/javascript">
+   //var user = '{{request.user}}'
+   var user = "{{ request.user|escapejs }}";
+
+function getToken(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+var csrftoken = getToken('csrftoken')
+
+</script>
+    <!-- Carousel Start -->
+           <!-- shop banner -->
+           <section class="shop-banner">
+            <div class="container">
+                <h3>Festive sale is on! <br>Shop with AgriAI<br> with big <span class="orange-text">Discount...</span></h3>
+                  <div class="sale-percent"><span>Sale! <br> Upto</span>50% <span>off</span></div>
+                  <a href="{% url 'shop' %}" class="cart-btn btn-lg">Shop Now</a>
+              </div>
+          </section>
+        <!-- end shop banner -->
+    <!-- Carousel End -->
+
+    <a href="{% url 'viewcategory'%}">
+        <h1>Category</h1>
+    </a>
+	<!-- Categories Start -->
+    <div class="product-section mt-150 mb-150">
+        <div class="container-fluid pt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-filters">
+                        <ul>
+                            <li class="active" data-filter="*">All</li>
+                            {% for product in products %}
+                            <li data-filter=".{{ product.category }}">{{ product.category }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row product-lists">
+                {% for product in products %}
+                <div class="col-lg-2 col-md-4 text-center {{ product.category }}">
+                    <div class="single-product-item">
+                        <div class="product-image">
+                            <a href="{% url 'product_detail' product.id %}">
+                                <img src="{{ product.image.url }}" alt="">
+                            </a>
+                        </div>
+                        <h3>{{ product.name }}</h3>
+                        <p class="product-price">
+                            <span>{{ product.category }}</span>{{ product.price }} ₹
+                        </p>
+                        <!--<a href="#" class="btn cart-btn update-cart" data-product="{{product.id}}" data-action="update-cart">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart  
+                        </a>-->
+                        <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-success add-btn update-cart"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="pagination-wrap">
+                        <ul>
+                            {% if products.has_previous %}
+                            <li><a href="?page={{ products.previous_page_number }}">Prev</a></li>
+                            {% endif %}
+                            {% for num in products.paginator.page_range %}
+                            <li><a class="{% if products.number == num %}active{% endif %}" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endfor %}
+                            {% if products.has_next %}
+                            <li><a href="?page={{ products.next_page_number }}">Next</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--	</div>-->
+	<!-- end products -->
+
+{% endblock %}		

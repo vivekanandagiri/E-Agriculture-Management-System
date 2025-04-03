@@ -1,0 +1,104 @@
+
+{% extends 'base.html' %}
+{% block title %}Soil test{% endblock title %}
+{% load static %}
+{% block content %}
+
+
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Agri Ai </p>
+                    <h1>Soil Test Report</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <title>Track Soil Test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Track</button>
+    </form>
+
+    {% if soil_tests %}
+        {% for soil_test in soil_tests %}
+            <h2>Soil Test Status for {{ soil_test.full_name }}</h2>
+            <hr>
+            <p><strong>Full Name:</strong> {{ soil_test.full_name }}</p>
+            <p><strong>Email:</strong> {{ soil_test.email }}</p>
+            <p><strong>Phone Number:</strong> {{ soil_test.phone_number }}</p>
+            <p><strong>Address:</strong> {{ soil_test.address }}</p>
+            <p><strong>City:</strong> {{ soil_test.city }}</p>
+            <p><strong>State:</strong> {{ soil_test.state }}</p>
+            <p><strong>Pincode:</strong> {{ soil_test.pincode }}</p>
+            <p><strong>Submitted At:</strong> {{ soil_test.submitted_at }}</p>
+            <p><strong>Status:</strong> {{ soil_test.status }}</p>
+            <p><strong>Tracking ID:</strong> {{ soil_test.tracking_id }}</p>
+            <hr> 
+            <h3>Soil Test Report</h3>
+            <table class="table table-bordered custom-table">
+                <tr>
+                    <th>Nitrogen</th>
+                    <th>Phosphorus</th>
+                    <th>Potassium</th>
+                    <th>pH</th>
+                    <th>Copper</th>
+                    <th>Boron</th>
+                    <th>Sulfur</th>
+                    <th>Iron</th>
+                    <th>Zinc</th>
+                </tr>
+                <tr>
+                    <td>{{ soil_test.nitrogen }}</td>
+                    <td>{{ soil_test.phosphorus }}</td>
+                    <td>{{ soil_test.potassium }}</td>
+                    <td>{{ soil_test.pH }}</td>
+                    <td>{{ soil_test.copper }}</td>
+                    <td>{{ soil_test.boron }}</td>
+                    <td>{{ soil_test.sulfur }}</td>
+                    <td>{{ soil_test.iron }}</td>
+                    <td>{{ soil_test.zinc }}</td>
+                </tr>
+            </table>
+            
+            <canvas id="soilTestChart{{ forloop.counter }}"></canvas>
+            
+            <script>
+                var ctx = document.getElementById('soilTestChart{{ forloop.counter }}').getContext('2d');
+                var chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Nitrogen', 'Phosphorus', 'Potassium', 'pH', 'Copper', 'Boron', 'Sulfur', 'Iron', 'Zinc'],
+                        datasets: [{
+                            label: 'Soil Test Results',
+                            data: [{{ soil_test.nitrogen }}, {{ soil_test.phosphorus }}, {{ soil_test.potassium }}, {{ soil_test.pH }}, {{ soil_test.copper }}, {{ soil_test.boron }}, {{ soil_test.sulfur }}, {{ soil_test.iron }}, {{ soil_test.zinc }}],
+                            backgroundColor: 'rgba(38, 219, 25, 0.7)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Soil Test{% endblock title %}
+{% load static %}
+{% block content %}
+<style>
+    /* Style For Form */
+    .contact-form {
+        background-color: #f9f9f9; 
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .contact-form h1 {
+        font-size: 2em;
+        color: #333;
+    }
+
+    .contact-form p {
+        color: #666;
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 15px;
+    }
+
+    .contact-form label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    .contact-form input, 
+    .contact-form select, 
+    .contact-form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .styled-button-action {
+        background-color: #28a745; /* Custom color for action buttons */
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 25px;
+    }
+
+    .styled-button-action:hover {
+        background-color: #218838; /* Darker shade for hover */
+    }
+
+    .styled-button-status {
+        background-color: #17a2b8; /* Custom color for status button */
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 25px;
+    }
+
+    .styled-button-status:hover {
+        background-color: #117a8b; /* Darker shade for hover */
+    }
+</style>
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Agri Ai</p>
+                    <h1>Soil Test</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="contact-form">
+        <h1 class="text-center">Request Soil Test</h1>
+        {% if messages %}
+            <div class="alert alert-info">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="POST" class="crop-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center">
+                <button type="submit" class="styled-button-action">Submit Request</button>
+                <a class="styled-button-status" href="{% url 'agri:track_soil_test' %}">Soil Test Report</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

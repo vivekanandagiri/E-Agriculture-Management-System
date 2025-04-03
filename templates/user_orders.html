@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- breadcrumb-section -->
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Track your orders</p>
+                    <h1>My Orders</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end breadcrumb section -->
+
+<!-- user orders section -->
+<div class="user-orders-section mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">All Orders</h2>
+                {% if orders %}
+                <table class="table table-bordered custom-table">
+                    <thead>
+                        <tr>
+                            <th>Agri ai Order Number</th>
+                            <th>Transaction Number</th>
+                            <th>Date Ordered</th>
+                            <th>Status</th>
+                            <th>Total Items</th>
+                            <th>Total Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr style="
+                            {% if order.status == 'Pending' %} background-color: #ffcccc; {% elif order.status == 'Processing' %} background-color: #ffebcc; {% elif order.status == 'Shipped' %} background-color: #cce5ff; {% elif order.status == 'Delivered' %} background-color: #d4edda; {% endif %}
+                        ">
+                            <td>#XXXXX{{ order.id }}</td>
+                            <td>{{ order.transaction_id }}</td>
+                            <td>{{ order.date_ordered }}</td>
+                            <td>{{ order.get_status_display }}</td>
+                            <td>{{ order.get_cart_items }}</td>
+                            <td>{{ order.get_cart_total }} ₹</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="no-orders">You have no orders yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end user orders section -->
+
+<style>
+.user-orders-section {
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.custom-table th, .custom-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.custom-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.custom-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.custom-table tr:hover {
+    background-color: #ddd;
+}
+
+.no-orders {
+    font-size: 18px;
+    color: #777;
+    margin-top: 20px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .custom-table th, .custom-table td {
+        padding: 10px;
+    }
+    .section-title {
+        font-size: 24px;
+    }
+}
+</style>
+{% endblock %}

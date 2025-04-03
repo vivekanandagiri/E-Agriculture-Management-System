@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="order-success-section mt-150 mb-150">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="order-success-content">
+                    <h1>Order Placed Successfully!</h1>
+                    <p>Thank you for Shopping With AgriAi. Your transaction ID is:</p>
+                    <h2>{{ order.transaction_id }}</h2>
+                    <p>You can use this ID to track your order.</p>
+                    <a href="{% url 'user_orders' %}" class="btn btn-success mt-6">Track Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock title %}
+{% load static %}
+{% block content %}
+
+<style>
+    /* Style For Form */
+    .contact-form {
+        background-color: #f9f9f9; 
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .crop-form .form-group p {
+        margin-bottom: 15px;
+    }
+
+    .styled-button-action {
+        background-color: #28a745; /* Custom color for action buttons */
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 25px;
+    }
+
+    .styled-button-action:hover {
+        background-color: #218838; /* Darker shade for hover */
+    }
+</style>
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Agri Ai </p>
+                    <h1>{{ title }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contact-from-section mt-150 mb-150">
+        <div class="container">
+            <div class="col">
+                <div class="form-title">
+                    <h2>Fill Up The required data bellow:</h2>
+                    
+                    {% if predicted_crop %}
+                    <div class="p-3 mb-2 bg-warning text-dark">
+                        <h2>Predicted Crop:{{ predicted_crop }}</h2>
+                    </div>
+                    {% endif %}
+                </div>
+                <div id="form_status"></div>
+                   <div class="contact-form">
+                            <form method="post" class="crop-form">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit"class="styled-button-action">Get Suggession</button>
+                            </form>
+                    </div> 
+                </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

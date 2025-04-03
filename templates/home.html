@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="hero-area hero-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 offset-lg-2 text-center">
+          <div class="hero-text">
+            <div class="hero-text-tablecell">
+                {% if user.is_authenticated %}
+                <h1>Hello  {{ user.username }} Welcome To AgriAI!</h1>
+                <a href="{% url 'authlogin' %}">Log Out</a>
+                {% else %}
+                <p>You are not logged in</p>
+                <a href="{% url 'authlogin' %}">Log In</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock  %}

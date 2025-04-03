@@ -1,0 +1,73 @@
+{% extends 'authbase.html' %}
+
+{% block title %}OTP Login{% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Page content -->
+    <div class="container mt--8 pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="card bg-transparent shadow border-dark border-5">
+                    <div class="card-header bg-transparent pb-5">
+                        <div class="text-muted text-center mt-2">
+                            <h2><b>OTP Login</b></h2>
+                        </div>
+                    </div>
+                    <div class="card-body px-lg-5 py-lg-5">
+                        <div class="text-center text-muted mb-4">
+                            {% if msg %}
+                                <p>{{ msg }}</p>
+                            {% else %}
+                                <p class="text-light">
+                                    Enter your mobile number to receive an OTP
+                                </p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- OTP Form -->
+                        <form method="POST" id="otpForm">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
+                                    </div>
+                                    {{ form.mobile }}
+                                </div>
+                            </div>
+                            {% if request.session.get('otp_sent') %}
+                            <div class="form-group mb-3">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                    </div>
+                                    {{ form.otp }}
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="text-center">
+                                <button type="submit" class="styled-button-action">{% if request.session.get('otp_sent') %}Verify OTP{% else %}Send OTP{% endif %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <small class="text-white-50">Not a user? <br></small><a href="{% url 'authregister' %}" class="text-light"><h6 class="orange-text">Register</h6></a>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="/admin/login/" class="styled-button active">Login as Admin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <div class="breadcrumb-text">
+                    <p>Agri Ai </p>
+                    <h1>{{ title }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="contact-from-section mt-150 mb-150">
+        <div class="container">
+            <div class="col">
+                <div class="form-title">
+                    <p>{{ recommendation }}</p>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
