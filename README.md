@@ -13,5 +13,7 @@ The scope of the project includes the development of a user-friendly interface, 
 
 * Then to tun the project 
 ```python manage.py runserver```
-![Screenshot of markdown file and resulting PDF](https://github.com/vivekanandagiri/E-Agriculture-Management-System/blob/main/AgriAippt.pdf)
+
+## Presentation PPT
+(https://github.com/vivekanandagiri/E-Agriculture-Management-System/blob/main/AgriAippt.pdf)
 
