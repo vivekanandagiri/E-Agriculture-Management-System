@@ -5,7 +5,7 @@ The objective of this project is to create an all-in-one solution that empowers 
 The scope of the project includes the development of a user-friendly interface, robust backend algorithms for crop and fertilizer recommendations, and an e-commerce module that facilitates transactions. The implementation of this system is expected to contribute significantly to the agricultural sector, supporting farmers in optimizing their operations and improving their livelihoods. Through this project, we envision a sustainable agricultural future enhanced by technology and innovation.
 
 ## How to Run the Project
-* Go to the Folder apath \Agriexpert
+* Go to the Folder path ``` \Agriexpert```
 * Then Activate the Environment 
 ```.venv\Scripts\activate```
 * Then Install Requirements.txt
