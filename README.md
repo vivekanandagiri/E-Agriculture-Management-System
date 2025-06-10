@@ -12,4 +12,5 @@ The scope of the project includes the development of a user-friendly interface, 
 ``` pip install -requirement.txt```
 
 * Then to tun the project 
-```python manage.py runserver``` 
+```python manage.py runserver```
+![Screenshot of markdown file and resulting PDF](https://files-iiiuxybjc.now.sh)
